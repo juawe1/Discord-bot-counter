@@ -1,5 +1,7 @@
 const testing = true;
 
+const config = require('./config.json')
+
 const {Client, Intents} = require('discord.js');
 
 const myIntents = new Intents();
@@ -54,4 +56,4 @@ client.on('GuildMemberRemove', async member =>{
 });
 
 
-client.login(process.env.TOKEN);
+client.login(config.token);
