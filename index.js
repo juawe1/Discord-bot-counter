@@ -54,4 +54,4 @@ client.on('GuildMemberRemove', async member =>{
 });
 
 
-client.login('OTE5MzgxMTc5ODA1ODkyNjI5.YbU-cg.0_lPZZzSmBcDAk_1lkF0_4wUHCE');
+client.login(process.env.TOKEN);
