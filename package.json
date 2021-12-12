@@ -1,0 +1,14 @@
+{
+  "name": "kickcounterbot",
+  "version": "1.0.0",
+  "description": "kick counter",
+  "main": "index.js",
+  "scripts": {
+    "test": "run"
+  },
+  "author": "juawei",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.3.1"
+  }
+}
