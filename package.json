@@ -4,7 +4,7 @@
   "description": "kick counter",
   "main": "index.js",
   "scripts": {
-    "test": "run"
+    "start": "node index.js"
   },
   "author": "juawei",
   "license": "ISC",
