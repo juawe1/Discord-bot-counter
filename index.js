@@ -1,13 +1,11 @@
-const testing = true;
+const testing = false;
 
 const config = require('./config.json')
 
-const {Client, Intents} = require('discord.js');
+const {Client} = require('discord.js');
 
-const myIntents = new Intents();
-myIntents.add(Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS);
-
-const client = new Client({ intents: myIntents });
+const client = new Client({ intents: 583 });
+var KickAmount = 0;
 
 
 client.on('ready', () =>{
@@ -21,39 +19,31 @@ client.on('ready', () =>{
 });
 
 client.on('messageCreate', async msg =>{
-    if (msg.content === "ping"){
-        msg.reply('pong')
-    } else if (msg.content === "!Pyro"){
-        msg.reply('Mans got 0 bitches :)');
+    if (msg.content === "!count"){
+        msg.reply(`Lewis has been kicked ${KickAmount}`)
     };
 });
 
 client.on('messageDelete', async msg => {
-    client.guilds.cache.get('919382180449370173').channels.cache.get('919382180449370176').send(`Someone deleted a message, the message was '${msg}'`);
+    client.guilds.cache.get(config.ServerID).channels.cache.get(config.GeneralChannelID).send(`Someone deleted a message, the message was '${msg}'`);
 })
 
-client.on('GuildMemberRemove', async member =>{
-  const fetchedLogs = await member.guild.fetchAuditLogs({
-      limit: 1, 
-      type: 'MEMBER_KICK',
-  });
-
-  const kicklog = fetchedLogs.first();
-
-  if (!kicklog) return console.log(`${member.user.tag} left at their own will`);
-
-  const { executor, target } = kicklog;
-
-  if (kicklog.createdAt < member.joinedAt) {
-      return console.log(`${member.user.tag} left at their own will`);
-  }
-
-  if (target.id === member.id) {
-    console.log(`${member.user.tag} left the guild; kicked by ${executor.tag}?`);
-  } else {
-        console.log(`${member.user.tag} left the guild, audit log fetch was inconclusive.`);
-  }
+client.on('guildMemberAdd', async member =>{
+    if (member.user.id === "589773384443887637"){
+        client.guilds.cache.get(config.ServerID).channels.cache.get(config.GeneralChannelID).send(`Lewis has returned`);
+    }else{
+        client.guilds.cache.get(config.ServerID).channels.cache.get(config.GeneralChannelID).send(`${member.user.tag} has just joined`);
+    };
 });
 
+client.on('guildMemberRemove', async member =>{
+
+    if (member.user.id === config.lewisID){
+        KickAmount += 1
+        client.guilds.cache.get(config.ServerID).channels.cache.get(config.GeneralChannelID).send(`Lewis has been kicked ${KickAmount} times.`);
+    }else{
+        client.guilds.cache.get(config.ServerID).channels.cache.get(config.GeneralChannelID).send(`${member.user.tag} has been removed because he made dom cry`);
+    };
+});
 
 client.login(config.token);
